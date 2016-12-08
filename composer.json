@@ -1,0 +1,14 @@
+{
+  "name": "castiron/rollbar",
+  "type": "typo3-cms-extension",
+  "description": "A Rollbar integration for TYPO3 (https://rollbar.com)",
+  "homepage": "https://github.com/castiron/typo3-plugin-rollbar",
+  "license": ["GPL-2.0+"],
+  "keywords": ["TYPO3 CMS"],
+  "typo3/cms-core": ">=6.2.0,<8.0",
+  "autoload": {
+    "psr-4": {
+      "CIC\\Rollbar\\": "Classes"
+    }
+  }
+}
