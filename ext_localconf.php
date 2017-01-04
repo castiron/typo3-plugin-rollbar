@@ -9,7 +9,20 @@ $config['root'] = $config['root'] ?: PATH_site;
 
 Rollbar::init(
     $config,
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['set_exception_handler'],
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['set_error_handler'],
+    /**
+     * Note these are configurable, but handled in ErrorHandler and ExceptionHandler
+     */
+    false,
+    false,
+
+    /**
+     * This defaults to true
+     */
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['report_fatal_errors'] === false ? false : true
+
 );
+
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['errorHandler'] = \CIC\Rollbar\Error\ErrorHandler::class;
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['debugExceptionHandler'] = \CIC\Rollbar\Error\ExceptionHandler::class;
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'] = \CIC\Rollbar\Error\ExceptionHandler::class;
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['errors']['exceptionHandler'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'];
