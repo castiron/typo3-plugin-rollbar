@@ -7,6 +7,10 @@ if (!defined ('TYPO3_MODE')) {
 $config = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['rollbar_config'] ?: array();
 $config['root'] = $config['root'] ?: PATH_site;
 
+if (class_exists('t3lib_extMgm')) {
+    require_once(t3lib_extMgm::extPath('rollbar') . 'ext_legacyload.php');
+}
+
 Rollbar::init(
     $config,
     /**
@@ -22,7 +26,7 @@ Rollbar::init(
 
 );
 
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['errorHandler'] = \CIC\Rollbar\Error\ErrorHandler::class;
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['debugExceptionHandler'] = \CIC\Rollbar\Error\ExceptionHandler::class;
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'] = \CIC\Rollbar\Error\ProductionExceptionHandler::class;
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['errorHandler'] = 'CIC\\Rollbar\\Error\\ErrorHandler';
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['debugExceptionHandler'] = 'CIC\\Rollbar\\Error\ExceptionHandler';
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'] = 'CIC\\Rollbar\\Error\\ProductionExceptionHandler';
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['errors']['exceptionHandler'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'];

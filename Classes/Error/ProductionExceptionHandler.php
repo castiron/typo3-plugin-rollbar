@@ -6,7 +6,7 @@ use TYPO3\CMS\Core\Error\ExceptionHandlerInterface;
  * Class ExceptionHandler
  * @package CIC\Rollbar\Error
  */
-class ProductionExceptionHandler extends Typo3ProductionExceptionHandler implements ExceptionHandlerInterface {
+class ProductionExceptionHandler extends \t3lib_error_ProductionExceptionHandler {
     /**
      * @param \Exception $exception
      */

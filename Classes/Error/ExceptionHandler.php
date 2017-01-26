@@ -6,7 +6,7 @@ use TYPO3\CMS\Core\Error\ExceptionHandlerInterface;
  * Class ExceptionHandler
  * @package CIC\Rollbar\Error
  */
-class ExceptionHandler extends DebugExceptionHandler implements ExceptionHandlerInterface {
+class ExceptionHandler extends \t3lib_error_DebugExceptionHandler {
     /**
      * @param \Exception $exception
      */
