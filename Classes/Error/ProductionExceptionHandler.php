@@ -8,12 +8,12 @@ use TYPO3\CMS\Core\Error\ExceptionHandlerInterface;
  */
 class ProductionExceptionHandler extends Typo3ProductionExceptionHandler implements ExceptionHandlerInterface {
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      */
-    public function handleException(\Exception $exception) {
-        parent::handleException($exception);
+    public function handleException($exception) {
         if ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['set_exception_handler']) {
             \Rollbar::report_exception($exception);
         }
+        parent::handleException($exception);
     }
 }
