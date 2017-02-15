@@ -21,6 +21,13 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar'] = array(
 //    'report_fatal_errors' => true,
 );
 
+/**
+ * Initialize Error Handling. Do this after the rollbar config. The error handling must get
+ * instantiated early on, which is why we don't use helper methods from ExtensionManagementUtility, etc.
+ */
+require_once(PATH_site . 'typo3conf/ext/rollbar/Classes/Utility/Initializer.php');
+\CIC\Rollbar\Utility\Initializer::initErrorHandling();
+
 ```
 
 Put that in your `typo3conf/AdditionalConfiguration.php`. In general, stuff you put in there is passed directly to 
