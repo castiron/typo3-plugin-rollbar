@@ -22,7 +22,7 @@ Rollbar::init(
 
 );
 
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['errorHandler'] = \CIC\Rollbar\Error\ErrorHandler::class;
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['debugExceptionHandler'] = \CIC\Rollbar\Error\ExceptionHandler::class;
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'] = \CIC\Rollbar\Error\ProductionExceptionHandler::class;
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['errorHandler'] = 'CIC\Rollbar\Error\ErrorHandler';
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['debugExceptionHandler'] = 'CIC\Rollbar\Error\ExceptionHandler';
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'] = 'CIC\Rollbar\Error\ProductionExceptionHandler';
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['errors']['exceptionHandler'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'];
