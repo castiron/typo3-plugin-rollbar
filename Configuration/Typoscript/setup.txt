@@ -1,0 +1,3 @@
+config {
+    contentObjectExceptionHandler = CIC\Rollbar\Error\ContentObjectExceptionHandler
+}

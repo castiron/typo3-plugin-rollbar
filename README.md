@@ -2,6 +2,8 @@
 
 This is more or less the Rollbar library with autoload and config conventions.
 
+### Quick start
+
 The config can be specified like
 
 ```$php
@@ -47,3 +49,19 @@ try {
     \Rollbar::report_exception($e);
 }
 ```
+
+#### TYPO3 Content Object Renderer exceptions
+
+Sometimes the TYPO3 core `ContentObjectRenderer` throws exceptions, which, in production, is amazing because your user,
+ on the frontend, will see something like,
+ 
+> Oops, an error occurred! Code: 201705082151141a71f8db
+
+And no other exception will be thrown, nor logged. :sweat:
+
+To remedy this you've got to add a little typoscript to your site. Under the "Includes" tab on your main typoscript
+ template, add the `Rollbar Content Exception Handling` typoscript.
+ 
+Best of luck to you in all your endeavors.
+
+
