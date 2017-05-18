@@ -2,6 +2,19 @@
 
 This is more or less the Rollbar library with autoload and config conventions.
 
+### A note on autoloading
+
+If you include this plugin via Composer, you should be good to go. If you're including this plugin the old-school way 
+(through the extension manager, or via a Git submodule), you won't have the Rollbar library or its internal dependencies
+on hand. You must autoload them with Composer. One way to do this is like so:
+
+1. Add composer.json to your project root, adding `rollbar/rollbar` as a dependency
+1. `composer install`
+1. Include the composer `vendor/autoload.php` in the project by `require_once`ing it from the top of the file
+ `typo3conf/AdditionalConfiguration.php`.
+1. If you're using a deployment system (like Capistrano) or other automated deployment approach, you'll need to be sure
+ and add a `composer install` step to your deployments :wink:
+
 ### Quick start
 
 The config can be specified like
@@ -41,7 +54,7 @@ NB: The "root" config value (for path mapping with your SCM repo) will be automa
 
 If you're using the default `set_exception_handler=false` and `set_error_handler=false`:
  * You'll still get any fatal errors automatically
- * You can manually catch/report report exceptions like so:
+ * You can manually catch/report exceptions like so:
 ```$php
 try {
     // ... do a lil dance

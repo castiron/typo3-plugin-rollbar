@@ -1,5 +1,7 @@
 <?php namespace CIC\Rollbar\Error;
 
+use Rollbar\Payload\Level;
+use Rollbar\Rollbar;
 use TYPO3\CMS\Frontend\ContentObject\AbstractContentObject;
 use TYPO3\CMS\Frontend\ContentObject\Exception\ProductionExceptionHandler;
 
@@ -16,7 +18,7 @@ class ContentObjectExceptionHandler extends ProductionExceptionHandler {
      * @throws \Exception
      */
     public function handle(\Exception $exception, AbstractContentObject $contentObject = null, $contentObjectConfiguration = []) {
-        \Rollbar::report_exception($exception, $contentObject);
+        Rollbar::log(Level::error(), $exception, ['cObject' => $contentObject]);
         if (static::backendUserIsPresent()) {
             throw $exception;
         }

@@ -10,5 +10,8 @@
     "psr-4": {
       "CIC\\Rollbar\\": "Classes"
     }
+  },
+  "require": {
+    "rollbar/rollbar": "~1.1"
   }
 }

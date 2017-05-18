@@ -1,4 +1,5 @@
 <?php namespace CIC\Rollbar\Utility;
+use Rollbar\Rollbar;
 
 /**
  * Class Initializer
@@ -6,15 +7,27 @@
  */
 class Initializer {
     public static function initErrorHandling() {
-        static::registerAutoloader();
+        /**
+         * Add the autoloader for TYPO3 to find our custom error handling classes
+         */
+        static::initRollbarTypo3PluginAutoloader();
+
+        /**
+         * Register our custom error handling classes with TYPO3_CONF_VARS
+         */
         static::setErrorHandlingConfig();
+
+        /**
+         * Init rollbar
+         */
+        static::initializeRollbar();
     }
 
     /**
      * We need to register a custom autoloader because the TYPO3 core doesn't initialize autoloaders until after
      * error handling is set up.
      */
-    protected static function registerAutoloader() {
+    protected static function initRollbarTypo3PluginAutoloader() {
         spl_autoload_register(function ($className) {
             $prefix = 'CIC\Rollbar\Error\\';
             if (strpos($className, $prefix) === 0) {
@@ -33,5 +46,24 @@ class Initializer {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['debugExceptionHandler'] = 'CIC\\Rollbar\\Error\\ExceptionHandler';
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'] = 'CIC\\Rollbar\\Error\\ProductionExceptionHandler';
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['errors']['exceptionHandler'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'];
+    }
+
+    protected static function initializeRollbar() {
+        $config = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['rollbar_config'] ?: array();
+        $config['root'] = $config['root'] ?: PATH_site;
+
+        Rollbar::init(
+            $config,
+            /**
+             * Note these are hard-coded here because they're handled explicitly in ErrorHandler and ExceptionHandler
+             */
+            false,
+            false,
+
+            /**
+             * This defaults to true
+             */
+            $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['report_fatal_errors'] === false ? false : true
+        );
     }
 }

@@ -1,4 +1,6 @@
 <?php namespace CIC\Rollbar\Error;
+use Rollbar\Payload\Level;
+use Rollbar\Rollbar;
 use TYPO3\CMS\Core\Error\ProductionExceptionHandler as Typo3ProductionExceptionHandler;
 use TYPO3\CMS\Core\Error\ExceptionHandlerInterface;
 
@@ -10,9 +12,10 @@ class ProductionExceptionHandler extends Typo3ProductionExceptionHandler impleme
     /**
      * @param \Exception|\Throwable $exception
      */
-    public function handleException($exception) {
+    public function handleException(\Exception $exception) {
+        $test = 1;
         if ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['set_exception_handler']) {
-            \Rollbar::report_exception($exception);
+            Rollbar::log(Level::error(), $exception);
         }
         parent::handleException($exception);
     }

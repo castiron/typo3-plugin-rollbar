@@ -4,25 +4,9 @@ if (!defined ('TYPO3_MODE')) {
     die ('Access denied.');
 }
 
-$config = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['rollbar_config'] ?: array();
-$config['root'] = $config['root'] ?: PATH_site;
-
-Rollbar::init(
-    $config,
-    /**
-     * Note these are configurable, but handled in ErrorHandler and ExceptionHandler
-     */
-    false,
-    false,
-
-    /**
-     * This defaults to true
-     */
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['report_fatal_errors'] === false ? false : true
-
-);
-
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['errorHandler'] = 'CIC\Rollbar\Error\ErrorHandler';
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['debugExceptionHandler'] = 'CIC\Rollbar\Error\ExceptionHandler';
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'] = 'CIC\Rollbar\Error\ProductionExceptionHandler';
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['errors']['exceptionHandler'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'];
+/**
+ * NB: This file is not used for registering Rollbar features, because it is loaded too late. Instead, check the
+ * README of this plugin for how to activate Rollbar error handling in your project. You'll want to run
+ * CIC\Rollbar\Utility\Initializer::initErrorHandling() after you've set your rollbar config options in
+ * [PATH_site]/localconf/AdditionalConfiguration.php
+ */
