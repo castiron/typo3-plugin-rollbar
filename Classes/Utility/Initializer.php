@@ -7,6 +7,14 @@ use Rollbar\Rollbar;
  */
 class Initializer {
     public static function initErrorHandling() {
+
+        /**
+         * Don't do anything if this isn't turned on.
+         */
+        if (!static::rollbarEnabled()) {
+            return;
+        }
+
         /**
          * Add the autoloader for TYPO3 to find our custom error handling classes
          */
@@ -48,12 +56,19 @@ class Initializer {
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['errors']['exceptionHandler'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'];
     }
 
-    protected static function initializeRollbar() {
+    /**
+     * @return array
+     */
+    protected static function typo3RollbarConfig() {
         $config = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['rollbar_config'] ?: array();
         $config['root'] = $config['root'] ?: PATH_site;
+        return $config;
+    }
 
+    protected static function initializeRollbar() {
         Rollbar::init(
-            $config,
+            static::typo3RollbarConfig(),
+
             /**
              * Note these are hard-coded here because they're handled explicitly in ErrorHandler and ExceptionHandler
              */
@@ -65,5 +80,12 @@ class Initializer {
              */
             $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['report_fatal_errors'] === false ? false : true
         );
+    }
+
+    /**
+     * @return bool
+     */
+    protected static function rollbarEnabled() {
+        return $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['rollbar_enabled'] ? true : false;
     }
 }
