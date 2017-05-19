@@ -11,7 +11,7 @@
       "CIC\\Rollbar\\": "Classes"
     }
   },
-  "require": {
-    "rollbar/rollbar": "~1.1"
+  "suggest": {
+    "rollbar/rollbar": "If you're installing this extension using Composer, you'll need to run `composer require rollbar/rollbar`, too."
   }
 }
