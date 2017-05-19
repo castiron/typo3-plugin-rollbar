@@ -1,11 +1,16 @@
 <?php namespace CIC\Rollbar\Utility;
 use Rollbar\Rollbar;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
  * Class Initializer
  * @package CIC\Rollbar\Utility
  */
 class Initializer {
+
+    /**
+     *
+     */
     public static function initErrorHandling() {
 
         /**
@@ -47,7 +52,7 @@ class Initializer {
     }
 
     /**
-     *
+     * Configure TYPO3 to use our error handlers (which will defer on to the core ones anyhow).
      */
     protected static function setErrorHandlingConfig() {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['errorHandler'] = 'CIC\\Rollbar\\Error\\ErrorHandler';
@@ -86,6 +91,48 @@ class Initializer {
      * @return bool
      */
     protected static function rollbarEnabled() {
+        /**
+         * This isn't enabled if the extension isn't loaded. We're early in the bootstrapping process.
+         */
+        if (!static::rollbarExtensionIsActive()) {
+            return false;
+        }
         return $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['rollbar_enabled'] ? true : false;
+    }
+
+    protected static function packageStatesPath() {
+        return PATH_site . 'typo3conf/PackageStates.php';
+    }
+
+    /**
+     * We have to check this manually because we're so early in the bootstrap process. Extensions have not been
+     * loaded yet.
+     */
+    protected static function rollbarExtensionIsActive() {
+        /**
+         * Look at the PackageStates.php file
+         */
+        $packagesFile = static::packageStatesPath();
+        if (!file_exists($packagesFile)) {
+            return false;
+        }
+
+        /**
+         * Load the config array from there
+         */
+        $extConfig = include($packagesFile);
+
+        /**
+         * Bail if we don't have rollbar config
+         */
+        $rollbarConfig = $extConfig['packages']['rollbar'];
+        if (!is_array($rollbarConfig)) {
+            return false;
+        }
+
+        /**
+         * Say if rollbar is active
+         */
+        return $rollbarConfig['state'] === 'active';
     }
 }
