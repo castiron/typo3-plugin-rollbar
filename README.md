@@ -59,8 +59,19 @@ If you're using the default `set_exception_handler=false` and `set_error_handler
 try {
     // ... do a lil dance
 } catch (\Exception $e) {
-    \Rollbar::report_exception($e);
+    /**
+    * Send the exception to Rollbar
+    */
+    \CIC\Rollbar\Utility\RollbarUtility::reportError($e);
+    
+    /**
+    * Or you could do one of these:
+    * 
+    * \CIC\Rollbar\Utility\RollbarUtility::reportWarning($e);
+    * \CIC\Rollbar\Utility\RollbarUtility::reportNotice($e);
+    */
 }
+
 ```
 
 #### TYPO3 Content Object Renderer exceptions
