@@ -20,9 +20,6 @@ $EM_CONF[$_EXTKEY] = array(
 	'lockType' => '',
 	'author_company' => '',
 	'version' => '0.0.1',
-    'autoload' => [
-        'classmap' => ['Classes/Vendor'],
-    ],
 	'constraints' => array(
 		'depends' => array(
 			'extbase' => '',
