@@ -27,6 +27,7 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar'] = array(
     'rollbar_config' => array(
         'access_token' => '[my-server-side-access-token]',
         'environment' => 'my-environment-name', // This is arbitrary and will scope your reporting in Rollbar
+        'rollbar_enabled' => true, // You can use this to turn it off/on
     ),
     /**
      * These are defaults
