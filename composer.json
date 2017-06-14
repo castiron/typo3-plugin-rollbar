@@ -12,6 +12,7 @@
     }
   },
   "require": {
-    "rollbar/rollbar": "^1.1"
+    "rollbar/rollbar": "^1.1",
+    "castiron/typo3-plugin-cicbase": "^1.1"
   }
 }
