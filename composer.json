@@ -1,5 +1,5 @@
 {
-  "name": "castiron/rollbar",
+  "name": "castiron/typo3-plugin-rollbar",
   "type": "typo3-cms-extension",
   "description": "A Rollbar integration for TYPO3 (https://rollbar.com)",
   "homepage": "https://github.com/castiron/typo3-plugin-rollbar",
