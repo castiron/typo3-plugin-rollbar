@@ -12,6 +12,6 @@
     }
   },
   "require": {
-    "rollbar/rollbar": "If you're installing this extension using Composer, you'll need to run `composer require rollbar/rollbar`, too."
+    "rollbar/rollbar": "^1.1"
   }
 }
