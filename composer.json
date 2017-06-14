@@ -11,6 +11,9 @@
       "CIC\\Rollbar\\": "Classes"
     }
   },
+  replace": {
+      "typo3_plugin_rollbar": "self.version"
+  },
   "repositories": [
     { "type": "vcs", "url": "git@github.com:castiron/cicbase.git" }  
   ],
