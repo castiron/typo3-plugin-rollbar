@@ -11,7 +11,7 @@
       "CIC\\Rollbar\\": "Classes"
     }
   },
-  replace": {
+  "replace": {
       "typo3_plugin_rollbar": "self.version"
   },
   "repositories": [
