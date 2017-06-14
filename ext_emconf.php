@@ -22,8 +22,6 @@ $EM_CONF[$_EXTKEY] = array(
 	'version' => '0.0.1',
 	'constraints' => array(
 		'depends' => array(
-			'extbase' => '',
-            'cicbase' => '',
 		),
 		'conflicts' => array(
 		),

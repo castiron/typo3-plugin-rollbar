@@ -12,13 +12,9 @@
     }
   },
   "replace": {
-      "typo3_plugin_rollbar": "self.version"
+      "rollbar": "self.version"
   },
-  "repositories": [
-    { "type": "vcs", "url": "git@github.com:castiron/cicbase.git" }  
-  ],
   "require": {
-    "rollbar/rollbar": "^1.1",
-    "castiron/typo3-plugin-cicbase": "dev-master"
+    "rollbar/rollbar": "^1.1"
   }
 }
