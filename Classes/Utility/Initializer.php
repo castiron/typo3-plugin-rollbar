@@ -97,9 +97,23 @@ class Initializer {
         if (!static::rollbarExtensionIsActive()) {
             return false;
         }
+
+        /**
+         * If there's no access token just don't use Rollbar
+         */
+        if (!$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['rollbar_config']['access_token']) {
+            return false;
+        }
+
+        /**
+         * The reporting can also be disabled by explicit flag
+         */
         return $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['rollbar_enabled'] ? true : false;
     }
 
+    /**
+     * @return string
+     */
     protected static function packageStatesPath() {
         return PATH_site . 'typo3conf/PackageStates.php';
     }
