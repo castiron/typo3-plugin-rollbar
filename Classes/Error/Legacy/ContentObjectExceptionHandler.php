@@ -3,7 +3,7 @@
 use Rollbar\Payload\Level;
 use Rollbar\Rollbar;
 use TYPO3\CMS\Frontend\ContentObject\AbstractContentObject;
-use TYPO3\CMS\Frontend\ContentObject\Exception\ProductionExceptionHandler;
+use TYPO3\CMS\Core\Error\ProductionExceptionHandler;
 
 /**
  * Class ContentObjectExceptionHandler
@@ -13,16 +13,15 @@ class ContentObjectExceptionHandler extends ProductionExceptionHandler {
     /**
      * @param \Exception $exception
      * @param AbstractContentObject|null $contentObject
-     * @param array $contentObjectConfiguration
-     * @return string
+     * @param array $_contentObjectConfiguration
      * @throws \Exception
      */
-    public function handle(\Exception $exception, AbstractContentObject $contentObject = null, $contentObjectConfiguration = []) {
+    public function handle(\Exception $exception, AbstractContentObject $contentObject = null, $_contentObjectConfiguration = []) {
         Rollbar::log(Level::ERROR, $exception, ['cObject' => $contentObject]);
         if (static::backendUserIsPresent()) {
             throw $exception;
         }
-        return parent::handle($exception, $contentObject, $contentObjectConfiguration);
+        parent::handleException($exception);
     }
 
     /**

@@ -56,6 +56,14 @@ class Initializer {
      * Configure TYPO3 to use our error handlers (which will defer on to the core ones anyhow).
      */
     protected static function setErrorHandlingConfig() {
+        if (static::usesLegacyExceptionHandlerInterface()) {
+            $GLOBALS['TYPO3_CONF_VARS']['SYS']['errorHandler'] = 'CIC\\Rollbar\\Error\\Legacy\\ErrorHandler';
+            $GLOBALS['TYPO3_CONF_VARS']['SYS']['debugExceptionHandler'] = 'CIC\\Rollbar\\Error\\Legacy\\ExceptionHandler';
+            $GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'] = 'CIC\\Rollbar\\Error\\Legacy\\ProductionExceptionHandler';
+            $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['errors']['exceptionHandler'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'];
+            return;
+        }
+
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['errorHandler'] = 'CIC\\Rollbar\\Error\\ErrorHandler';
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['debugExceptionHandler'] = 'CIC\\Rollbar\\Error\\ExceptionHandler';
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['productionExceptionHandler'] = 'CIC\\Rollbar\\Error\\ProductionExceptionHandler';
@@ -180,5 +188,13 @@ class Initializer {
     protected static function usesSimplePackageStatesFormat() {
         return VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch)
             >= VersionNumberUtility::convertVersionNumberToInteger('8.0.0');
+    }
+
+    /**
+     * @return bool
+     */
+    protected static function usesLegacyExceptionHandlerInterface() {
+        return VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch)
+            < VersionNumberUtility::convertVersionNumberToInteger('7.0.0');
     }
 }

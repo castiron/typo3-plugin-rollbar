@@ -12,7 +12,7 @@ class RollbarUtility {
      * @param array $extra
      */
     public static function reportError($error, $extra = []) {
-        Rollbar::log(Level::error(), $error, $extra);
+        Rollbar::log(Level::fromPhpErrorLevel(E_ERROR), $error, $extra);
     }
 
     /**
@@ -20,7 +20,7 @@ class RollbarUtility {
      * @param array $extra
      */
     public static function reportWarning($error, $extra = []) {
-        Rollbar::log(Level::warning(), $error, $extra);
+        Rollbar::log(Level::fromPhpErrorLevel(E_WARNING), $error, $extra);
     }
 
     /**
@@ -28,6 +28,6 @@ class RollbarUtility {
      * @param array $extra
      */
     public static function reportNotice($error, $extra = []) {
-        Rollbar::log(Level::notice(), $error, $extra);
+        Rollbar::log(Level::fromPhpErrorLevel(E_NOTICE), $error, $extra);
     }
 }

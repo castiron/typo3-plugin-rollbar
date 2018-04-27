@@ -1,4 +1,4 @@
-<?php namespace CIC\Rollbar\Error;
+<?php namespace CIC\Rollbar\Error\Legacy;
 
 use CIC\Rollbar\Rollbar\Payload\Level;
 use Rollbar\Rollbar;
@@ -6,8 +6,8 @@ use TYPO3\CMS\Core\Error\ErrorHandler as Typo3ErrorHandler;
 use TYPO3\CMS\Core\Error\ErrorHandlerInterface;
 
 /**
- * Class ExceptionHandler
- * @package CIC\Rollbar\Error
+ * Class ErrorHandler
+ * @package CIC\Rollbar\Error\Legacy
  */
 class ErrorHandler extends Typo3ErrorHandler implements ErrorHandlerInterface {
     /**
