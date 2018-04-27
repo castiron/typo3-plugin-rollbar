@@ -1,4 +1,5 @@
 <?php namespace CIC\Rollbar\Error;
+
 use Rollbar\Payload\Level;
 use Rollbar\Rollbar;
 use TYPO3\CMS\Core\Error\DebugExceptionHandler;
@@ -10,9 +11,10 @@ use TYPO3\CMS\Core\Error\ExceptionHandlerInterface;
  */
 class ExceptionHandler extends DebugExceptionHandler implements ExceptionHandlerInterface {
     /**
-     * @param \Exception|\Throwable $exception
+     * @param \Throwable $exception
+     * @throws \Exception
      */
-    public function handleException($exception) {
+    public function handleException(\Throwable $exception) {
         if ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['set_exception_handler']) {
             Rollbar::log(Level::error(), $exception);
         }

@@ -1,6 +1,7 @@
 <?php namespace CIC\Rollbar\Utility;
+
 use Rollbar\Rollbar;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * Class Initializer
@@ -145,8 +146,39 @@ class Initializer {
         }
 
         /**
-         * Say if rollbar is active
+         * Inspect package states config for active; logic varies by TYPO3 version
          */
-        return $rollbarConfig['state'] === 'active';
+        return static::checkPackageStatesConfigForActive($rollbarConfig);
+    }
+
+    /**
+     * @param $rollbarPackageConfig
+     * @return bool
+     */
+    protected static function checkPackageStatesConfigForActive($rollbarPackageConfig)
+    {
+        if (!$rollbarPackageConfig) {
+            return false;
+        }
+
+        /**
+         * We guarded for absence, so if we're using a modern TYPO3 we are good to go
+         */
+        if (static::usesSimplePackageStatesFormat()) {
+            return true;
+        }
+
+        /**
+         * Older-school style, we have to check for 'active'
+         */
+        return $rollbarPackageConfig['state'] === 'active';
+    }
+
+    /**
+     * @return bool
+     */
+    protected static function usesSimplePackageStatesFormat() {
+        return VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch)
+            >= VersionNumberUtility::convertVersionNumberToInteger('8.0.0');
     }
 }
