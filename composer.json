@@ -14,7 +14,7 @@
   "replace": {
       "rollbar": "self.version"
   },
-  "require": {
+  "suggest": {
     "rollbar/rollbar": "^1.3.5"
   }
 }
