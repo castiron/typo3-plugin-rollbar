@@ -12,7 +12,7 @@ class ProductionExceptionHandler extends Typo3ProductionExceptionHandler impleme
     /**
      * @param \Exception|\Throwable $exception
      */
-    public function handleException(\Exception $exception) {
+    public function handleException(\Throwable $exception) {
         if ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['set_exception_handler']) {
             Rollbar::log(Level::ERROR, $exception);
         }
