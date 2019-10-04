@@ -11,10 +11,10 @@ use TYPO3\CMS\Core\Error\ExceptionHandlerInterface;
  */
 class ExceptionHandler extends DebugExceptionHandler implements ExceptionHandlerInterface {
     /**
-     * @param \Throwable $exception
+     * @param \Exception|\Throwable $exception
      * @throws \Exception
      */
-    public function handleException(\Throwable $exception) {
+    public function handleException($exception) {
         if ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rollbar']['set_exception_handler']) {
             Rollbar::log(Level::ERROR, $exception);
         }
